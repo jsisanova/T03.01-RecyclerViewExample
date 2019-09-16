@@ -93,6 +93,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 
     /**
      * Cache of the children views for a list item.
+     * Create NumberViewHolder inner class containing a single text view reference.
      */
     class NumberViewHolder extends RecyclerView.ViewHolder {
 
@@ -108,16 +109,16 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
          */
         public NumberViewHolder(View itemView) {
             super(itemView);
-
             listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
         }
 
         /**
-         * A method we wrote for convenience. This method will take an integer as input and
+         * This helper method will take an integer as input and
          * use that integer to display the appropriate text within a list item.
          * @param listIndex Position of the item in the list
          */
         void bind(int listIndex) {
+            // Get the String representation of listIndex (as using setText with an int does something different)
             listItemNumberView.setText(String.valueOf(listIndex));
         }
     }
