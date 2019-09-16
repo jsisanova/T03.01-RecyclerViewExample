@@ -22,4 +22,6 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:25.1.0'
 
     // TODO (1) Add RecyclerView dependency
+    implementation 'com.android.support:recyclerview-v7:25.1.0'
+
 }
