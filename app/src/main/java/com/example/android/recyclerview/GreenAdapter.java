@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+//Feed all the data to the list
 public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHolder> {
 
     private static final String TAG = GreenAdapter.class.getSimpleName();
@@ -40,11 +41,11 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     }
 
     /**
-     *
      * This gets called when each new ViewHolder is created. This happens when the RecyclerView
      * is laid out. Enough ViewHolders will be created to fill the screen and allow for scrolling.
+     * (invoked by the layout manager)
      *
-     * @param viewGroup The ViewGroup that these ViewHolders are contained within.
+     * @param parent The ViewGroup that these ViewHolders are contained within.
      * @param viewType  If your RecyclerView has more than one type of item (which ours doesn't) you
      *                  can use this viewType integer to provide a different layout. See
      *                  {@link android.support.v7.widget.RecyclerView.Adapter#getItemViewType(int)}
@@ -52,14 +53,19 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
      * @return A new NumberViewHolder that holds the View for each list item
      */
     @Override
-    public NumberViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        Context context = viewGroup.getContext();
-        int layoutIdForListItem = R.layout.number_list_item;
-        LayoutInflater inflater = LayoutInflater.from(context);
-        boolean shouldAttachToParentImmediately = false;
+    public NumberViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        Context context = parent.getContext();
+//        int layoutIdForListItem = R.layout.number_list_item;
+//        LayoutInflater inflater = LayoutInflater.from(context);
+//        boolean shouldAttachToParentImmediately = false;
+//
+//        View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
 
-        View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
-        NumberViewHolder viewHolder = new NumberViewHolder(view);
+        // create a new view
+        View newView = (View) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.number_list_item, parent, false);
+
+        NumberViewHolder viewHolder = new NumberViewHolder(newView);
 
         return viewHolder;
     }
@@ -69,6 +75,8 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
      * position. In this method, we update the contents of the ViewHolder to display the correct
      * indices in the list for this particular position, using the "position" argument that is conveniently
      * passed into us.
+     * Populates the view with data from data source and replaces the content of some of the views with new data when the original item is no longer visible.
+     * (invoked by the layout manager)
      *
      * @param holder   The ViewHolder which should be updated to represent the contents of the
      *                 item at the given position in the data set.
@@ -78,10 +86,13 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     public void onBindViewHolder(NumberViewHolder holder, int position) {
         Log.d(TAG, "#" + position);
         holder.bind(position);
+
+        // also possible directly without helper class
+//        holder.listItemNumberView.setText(String.valueOf(position));
     }
 
     /**
-     * This method simply returns the number of items to display. It is used behind the scenes
+     * This method simply returns the number of items in the data source to display (invoked by the layout manager). It is used behind the scenes
      * to help layout our Views and for animations.
      *
      * @return The number of items available in our forecast
@@ -92,8 +103,9 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     }
 
     /**
-     * Cache of the children views for a list item.
-     * Create NumberViewHolder inner class containing a single text view reference.
+     * Cache of (Reference to) the children views for a list item.
+     * Create NumberViewHolder inner class containing in this case a single text view reference.
+     * Complex data items may need more than one view per item.
      */
     class NumberViewHolder extends RecyclerView.ViewHolder {
 
@@ -104,8 +116,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
          * Constructor for our ViewHolder. Within this constructor, we get a reference to our
          * TextViews and set an onClickListener to listen for clicks. Those will be handled in the
          * onClick method below.
-         * @param itemView The View that you inflated in
-         *                 {@link GreenAdapter#onCreateViewHolder(ViewGroup, int)}
+         * @param itemView The View that you inflated in {@link GreenAdapter#onCreateViewHolder(ViewGroup, int)}
          */
         public NumberViewHolder(View itemView) {
             super(itemView);

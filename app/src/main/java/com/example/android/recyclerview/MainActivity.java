@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /*
-         * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
+         * Get a reference to our RecyclerView from xml. This allows us to
          * do things like set the adapter of the RecyclerView and toggle the visibility.
          */
         mNumbersList = (RecyclerView) findViewById(R.id.rv_numbers);
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
          *
          * There are other LayoutManagers available to display your data in uniform grids,
          * staggered grids, and more! See the developer documentation for more details.
+         *
+         * Use LinearLayoutManager.
          */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mNumbersList.setLayoutManager(layoutManager);
@@ -66,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
          * The GreenAdapter is responsible for displaying each item in the list.
          */
         mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
-
         mNumbersList.setAdapter(mAdapter);
     }
 }
